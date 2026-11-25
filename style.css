@@ -1,0 +1,139 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background: #f4f6f9;
+  color: #1e293b;
+  padding: 24px 14px;
+}
+
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  display: grid;
+  gap: 18px;
+}
+
+.top-bar h1 {
+  font-size: 1.6rem;
+  margin-bottom: 4px;
+}
+
+.top-bar p {
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.06);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+input {
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+input:focus {
+  outline: 2px solid #2563eb;
+  border-color: transparent;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.primary {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.secondary {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px 6px;
+  border-bottom: 1px solid #f1f5f9;
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.15rem;
+  margin-top: 14px;
+  padding-top: 10px;
+}
+
+@media print {
+  body {
+    background: #ffffff;
+    padding: 0;
+  }
+  .top-bar, .card:first-of-type, .btn {
+    display: none;
+  }
+  .card {
+    box-shadow: none;
+  }
+}

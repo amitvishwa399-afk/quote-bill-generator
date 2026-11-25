@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quick Quote & Bill Maker</title>
+  <style>
+    :root {
+      --bg: #f4f6f9;
+      --card: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --label: #334155;
+      --border: #cbd5e1;
+      --divider: #e2e8f0;
+      --row-border: #f1f5f9;
+      --shadow: 0 2px 10px rgba(15, 23, 42, 0.06);
+      --primary: #2563eb;
+      --primary-text: #ffffff;
+      --secondary: #e2e8f0;
+      --secondary-text: #0f172a;
+      --focus-ring: #2563eb;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f172a;
+        --card: #1e293b;
+        --text: #f8fafc;
+        --muted: #94a3b8;
+        --label: #cbd5e1;
+        --border: #334155;
+        --divider: #334155;
+        --row-border: #273549;
+        --shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+        --primary: #3b82f6;
+        --primary-text: #ffffff;
+        --secondary: #334155;
+        --secondary-text: #f8fafc;
+        --focus-ring: #60a5fa;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      padding: 24px 14px;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      display: grid;
+      gap: 18px;
+    }
+
+    .top-bar h1 {
+      font-size: 1.6rem;
+      margin-bottom: 4px;
+    }
+
+    .top-bar p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--label);
+    }
+
+    input {
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      background: var(--card);
+      color: var(--text);
+    }
+
+    input::placeholder {
+      color: var(--muted);
+    }
+
+    input:focus {
+      outline: 2px solid var(--focus-ring);
+      border-color: transparent;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .btn {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .primary {
+      background: var(--primary);
+      color: var(--primary-text);
+    }
+
+    .secondary {
+      background: var(--secondary);
+      color: var(--secondary-text);
+    }
+
+    .preview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--divider);
+    }
+
+    .preview-header p {
+      color: var(--muted);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 10px 6px;
+      border-bottom: 1px solid var(--row-border);
+      text-align: left;
+    }
+
+    .right {
+      text-align: right;
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.15rem;
+      margin-top: 14px;
+      padding-top: 10px;
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+        color: #1e293b;
+        padding: 0;
+      }
+      .top-bar, .card:first-of-type, .btn {
+        display: none;
+      }
+      .card {
+        background: #ffffff;
+        color: #1e293b;
+        box-shadow: none;
+      }
+      th, td {
+        border-bottom-color: #e2e8f0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header class="top-bar">
+      <h1>Instant Quote &amp; Bill Generator</h1>
+      <p>Create clean estimates and bills in seconds.</p>
+    </header>
+
+    <section class="card">
+      <div class="grid-2">
+        <div class="field">
+          <label for="businessName">Business / Studio Name</label>
+          <input type="text" id="businessName" placeholder="e.g., Apex Interiors" autocomplete="off" />
+        </div>
+        <div class="field">
+          <label for="clientName">Client Name</label>
+          <input type="text" id="clientName" placeholder="e.g., Rahul Sharma" autocomplete="off" />
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label for="itemDesc">Service / Item</label>
+          <input type="text" id="itemDesc" placeholder="e.g., Modular Kitchen Design" autocomplete="off" />
+        </div>
+        <div class="field">
+          <label for="itemAmount">Amount (₹)</label>
+          <input type="number" id="itemAmount" placeholder="0" min="0" autocomplete="off" />
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="button" id="addItemBtn" class="btn primary">+ Add Item</button>
+        <button type="button" id="printBtn" class="btn secondary">Print / Save PDF</button>
+      </div>
+    </section>
+
+    <section class="card preview">
+      <div class="preview-header">
+        <h2 id="previewBusiness">Your Business Name</h2>
+        <p id="previewClient">Client: —</p>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th class="right">Amount (₹)</th>
+          </tr>
+        </thead>
+        <tbody id="itemsBody"></tbody>
+      </table>
+
+      <div class="total-row">
+        <span>Total</span>
+        <strong id="totalAmount">₹0</strong>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const businessInput = document.getElementById("businessName");
+    const clientInput = document.getElementById("clientName");
+    const itemDescInput = document.getElementById("itemDesc");
+    const itemAmountInput = document.getElementById("itemAmount");
+    const addItemBtn = document.getElementById("addItemBtn");
+    const printBtn = document.getElementById("printBtn");
+
+    const previewBusiness = document.getElementById("previewBusiness");
+    const previewClient = document.getElementById("previewClient");
+    const itemsBody = document.getElementById("itemsBody");
+    const totalAmountEl = document.getElementById("totalAmount");
+
+    let items = [];
+
+    function updateHeaderPreview() {
+      const biz = businessInput.value.trim();
+      const client = clientInput.value.trim();
+      previewBusiness.textContent = biz || "Your Business Name";
+      previewClient.textContent = client ? "Client: " + client : "Client: —";
+    }
+
+    function renderItems() {
+      itemsBody.innerHTML = "";
+      let total = 0;
+
+      items.forEach(function (item) {
+        total += item.amount;
+        const row = document.createElement("tr");
+
+        const descCell = document.createElement("td");
+        descCell.textContent = item.desc;
+
+        const amountCell = document.createElement("td");
+        amountCell.className = "right";
+        amountCell.textContent = "₹" + item.amount.toLocaleString("en-IN");
+
+        row.appendChild(descCell);
+        row.appendChild(amountCell);
+        itemsBody.appendChild(row);
+      });
+
+      totalAmountEl.textContent = "₹" + total.toLocaleString("en-IN");
+    }
+
+    addItemBtn.addEventListener("click", function () {
+      updateHeaderPreview();
+      const desc = itemDescInput.value.trim();
+      const amount = Number(itemAmountInput.value);
+
+      if (!desc) {
+        alert("Please type a Service / Item name.");
+        itemDescInput.focus();
+        return;
+      }
+
+      if (Number.isNaN(amount) || amount <= 0) {
+        alert("Please enter an Amount greater than 0.");
+        itemAmountInput.focus();
+        return;
+      }
+
+      items.push({ desc: desc, amount: amount });
+      renderItems();
+
+      itemDescInput.value = "";
+      itemAmountInput.value = "";
+      itemDescInput.focus();
+    });
+
+    printBtn.addEventListener("click", function () {
+      updateHeaderPreview();
+      window.print();
+    });
+
+    businessInput.addEventListener("input", updateHeaderPreview);
+    businessInput.addEventListener("change", updateHeaderPreview);
+    clientInput.addEventListener("input", updateHeaderPreview);
+    clientInput.addEventListener("change", updateHeaderPreview);
+  </script>
+</body>
+</html>
